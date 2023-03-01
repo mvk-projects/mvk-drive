@@ -51,7 +51,9 @@
   successUploadList = result.join('\r\n');
   failedUploadList = failed.join('\r\n');
   alert("List of File(s) Uploaded Successfully to the Cloud is/are : \n\n" + successUploadList);
+  if(failedUploadList.length!=0 || failedUploadList!=""){
   alert("Upload Failed, List of Duplicate File(s) exists in Cloud is/are : \n\n" + failedUploadList);
+  }
   setTimeout(function () { window.location.href = "/"; }, 1000);
   localStorage.clear();
 

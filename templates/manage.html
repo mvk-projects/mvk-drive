@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>UPLOAD PAGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <style>
+        .down {
+            border: 1px solid white;
+            color: green;
+            padding: 2px 4px;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .down:hover {
+            background-color: green;
+            color: white;
+            text-decoration: none;
+        }
+
+        .delete1 {
+            border: 1px solid white;
+            color: red;
+            padding: 2px 4px;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .delete1:hover {
+            background-color: red;
+            color: white;
+            text-decoration: none;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: auto;
+        }
+
+        td,
+        th {
+            border: 1px solid white;
+            text-align: center;
+            padding: 8px;
+        }
+
+        body {
+            background-image: url("static/THEME.jpg");
+            color: white;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 3px;
+            background-color: #ccc;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <h1 align="center" style="color:white;font-family:cursive;">TURBO DRIVE</h1>
+    <br /><br /><br /><br />
+    <div class="container mt-5">
+        <div class="col-sm-12 col-lg-4 mr-auto ml-auto border p-4">
+            <form method="POST" action="/uploader" id="myForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label><strong>Upload File</strong></label>
+                    <div class="custom-file">
+                        <input type="file" id="file" class="custom-file-input form-control" name="file" multiple
+                            required>
+                        <label class="custom-file-label" for="file">Choose A File</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="submitFunction()" name="upload" value="Upload" id="upload"
+                        class="btn btn-block btn-dark"><i class="fa fa-fw fa-upload"></i> Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <footer style="color:black;font-weight:600;">&copy; Copyright 2023 Vamshi Krishna Madhavan</footer>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('input[type="file"]').on("change", function () {
+                let filenames = [];
+                let currentFileNames = "Selected Files for Upload are :\n\n";
+                let files = document.getElementById("file").files;
+                if (files.length > 1) {
+                    filenames.push("Total Files (" + files.length + ")");
+                    for (let i = 0; i < files.length; i++)
+                        currentFileNames += ((i + 1) + ". " + files[i].name + "\n");
+                    alert(currentFileNames);
+                } else {
+                    for (let i in files) {
+                        if (files.hasOwnProperty(i)) {
+                            filenames.push(files[i].name);
+                            alert(currentFileNames + files[i].name);
+                        }
+                    }
+                }
+                $(this)
+                    .next(".custom-file-label")
+                    .html(filenames.join(","));
+            });
+        });
+
+        function submitFunction() {
+            if (document.getElementById("file").files.length == 0) {
+                alert("File is required to upload!!");
+                document.getElementById('myForm').reset();
+                return false;
+            }
+            var name = ""
+            for (let i = 0; i < document.getElementById("file").files.length - 1; i++) {
+                name += (document.getElementById("file").files[i].name + ",");
+            }
+            name += (document.getElementById("file").files[document.getElementById("file").files.length - 1].name);
+            localStorage.setItem("fileName", name);
+            document.getElementById('myForm').submit();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

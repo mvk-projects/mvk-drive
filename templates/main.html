@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+	<title>Personal Drive</title>
+	<link rel="stylesheet" type="text/css"
+		href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&amp;display=swap">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			font-family: "Poppins", sans-serif;
+		}
+
+		body {
+			background-color: #1F2833;
+			height: 100vh;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+		}
+
+		.wrapper {
+			width: 30em;
+		}
+
+		.input-container {
+			position: relative;
+			background-color: #ffffff;
+			width: inherit;
+			height: 4.4em;
+			border-radius: 5px;
+		}
+
+		.top-right-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+
+		#upload {
+			display: block;
+			width: 60px;
+			background-color: #000000;
+			color: #ffffff;
+			font-size: 1.4em;
+			text-align: center;
+			padding: 0.2em 0;
+			float: right;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+
+		#view,
+		#delete {
+			display: block;
+			width: 225px;
+			background-color: #000000;
+			color: #ffffff;
+			font-size: 1.4em;
+			< !-- display: flex;
+			-->justify-content: center;
+			margin: 0 auto;
+			text-align: center;
+			position: relative;
+			padding: 0.7em 0;
+			margin-top: 1.8em;
+			text-decoration: none;
+			border-radius: 25px;
+			cursor: pointer;
+		}
+
+		#view:hover {
+			background: linear-gradient(-60deg, green 45%, #66FCF1 55%);
+			color: black;
+			border: 0.5px solid white;
+			-webkit-transform: translateY(-1px);
+			transform: translateY(-1px);
+		}
+
+		#download:hover {
+			background-color: green;
+			border: 0.5px solid #66FCF1;
+			-webkit-transform: translateY(-1px);
+			transform: translateY(-1px);
+		}
+
+		#upload:hover {
+			border: 0.5px solid #66FCF1;
+			background-color: DodgerBlue;
+			-webkit-transform: translateY(-1px);
+			transform: translateY(-1px);
+		}
+
+		#delete:hover {
+			border: 0.5px solid #66FCF1;
+			background-color: red;
+			-webkit-transform: translateY(-1px);
+			transform: translateY(-1px);
+		}
+
+		input {
+			outline: none;
+			border: none;
+			background-color: transparent;
+			position: absolute;
+			width: 400px;
+			height: inherit;
+			color: #000000;
+			font-size: 25px;
+			padding: 0 18px;
+			z-index: 3;
+		}
+
+		#suggestion {
+			width: inherit;
+			height: inherit;
+			position: absolute;
+			z-index: 2;
+			top: 0;
+			left: 0;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+			padding: 0 18px;
+			font-size: 25px;
+			color: #868686;
+		}
+
+		.fab {
+			color: #ff0000;
+		}
+
+		@media screen and (max-width: 576px) {
+			.wrapper {
+				width: 80vw;
+			}
+
+			input,
+			#suggestion {
+				font-size: 16px;
+			}
+		}
+
+		.footer {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			padding: 3px;
+			background-color: #ccc;
+			color: white;
+			text-align: center;
+		}
+
+		h1 {
+			font-family: serif;
+			font-weight: 900;
+		}
+	</style>
+</head>
+
+<!--<h1 align="center">Personal Drive</h1>-->
+
+<body onload="window.location.reload();">
+	<div class="top-right-button">
+		<form action="/upload" method="post">
+			<button title="Upload File" type="submit" id="upload">
+				<i class="fa fa-upload"></i>
+			</button>
+		</form>
+	</div>
+	<div class="wrapper">
+
+		<h1 align="center" style="color:white;font-family:cursive;">TURBO DRIVE</h1><br /><br /><br />
+		<form action="/manage" name="myForm" id="myForm" method="post">
+
+			<div class="input-container">
+				<input type="text" title="Search for File...." id="input" name="input" onfocus="this.placeholder=''"
+					onblur="this.placeholder='Search for File here...'" autocomplete="off" minlength="4" maxlength="300"
+					required />
+				<span id="suggestion"></span>
+			</div>
+			<br /><br /><br />
+			<!--        <input type="submit" name="button" id="view">-->
+			<!--        View File &nbsp;<i class="fa fa-eye"></i>-->
+			<!--        </input>-->
+			<!--        <a id="view" onclick="viewDownloadFunction()">-->
+			<!--            View File &nbsp;<i class="fa fa-eye"></i> Download &nbsp;<i class="fa fa-download"></i>-->
+			<!--        </a>-->
+			<button title="View/Download File" type="button" id="view" onclick="manageFunction(this.id)">
+				View File &nbsp;<i class="fa fa-eye"></i>
+			</button>
+
+			<button title="Delete File" type="button" id="delete" onclick="manageFunction(this.id)">
+				Delete &nbsp;<i class="fa fa-trash"></i>
+			</button>
+
+		</form>
+
+		<!--    <button id="download" onclick="downloadFunction()">-->
+		<!--        Download &nbsp;<i class="fa fa-download"></i>-->
+		<!--    </button>-->
+		<!--    <form action="/delete" method="post">-->
+		<!--        <input type="submit" id="delete">-->
+		<!--        Delete &nbsp;<i class="fa fa-trash"></i>-->
+		<!--        </input>-->
+		<!--    </form>-->
+		<!--    &lt;!&ndash;        <a id="upload" href="/manage" target="_self">&ndash;&gt;-->
+		<!--    &lt;!&ndash;            Upload &nbsp;<i class="fa fa-upload"></i>&ndash;&gt;-->
+		<!--    &lt;!&ndash;        </a>&ndash;&gt;-->
+		<!--    <form action="/upload" method="post">-->
+		<!--        <input type="submit" id="upload">-->
+		<!--        Upload &nbsp;<i class="fa fa-upload"></i>-->
+		<!--        </input>-->
+		<!--    </form>-->
+	</div>
+	<div class="footer">
+		<footer style="color:black;font-weight:600;">&copy; Copyright 2023 Vamshi Krishna Madhavan</footer>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+	<script>
+		function manageFunction(id) {
+			var text = document.getElementById("input").value;
+			if (id == "delete") {
+				document.getElementById("input").value = (text + "$$$" + "del");
+				var text1 = document.getElementById("input").value;
+				if (text1 == null || text1.trim() === "") {
+					alert("Search Field cannot be empty!!");
+					document.getElementById('myForm').reset();
+					return false;
+				}
+				document.getElementById('myForm').submit();
+			}
+			if (text == null || text.trim() === "") {
+				alert("Search Field cannot be empty!!");
+				document.getElementById('myForm').reset();
+				return false;
+			}
+			document.getElementById('myForm').submit();
+		}
+
+		let list_of_files = '{{ list_files }}';
+		let words = list_of_files.split('$');
+		words.sort();
+		let input = document.getElementById("input");
+		let suggestion = document.getElementById("suggestion");
+		//Enter key code
+		const enterKey = 13;
+
+		window.onload = () => {
+			input.value = "";
+			clearSuggestion();
+		};
+
+		const clearSuggestion = () => {
+			suggestion.innerHTML = "";
+		};
+
+		const caseCheck = (word) => {
+			//Array of characters
+			word = word.split("");
+			let inp = input.value;
+			//loop through every character in ino
+			for (let i in inp) {
+				//if input character matches with character in word no need to change
+				if (inp[i] == word[i]) {
+					continue;
+				} else if (inp[i].toUpperCase() == word[i]) {
+					//if inp[i] when converted to uppercase matches word[i] it means word[i] needs to be lowercase
+					word.splice(i, 1, word[i].toLowerCase());
+				} else {
+					//word[i] needs to be uppercase
+					word.splice(i, 1, word[i].toUpperCase());
+				}
+			}
+			//array to string
+			return word.join("");
+		};
+
+		//Execute function on input
+		input.addEventListener("input", (e) => {
+			clearSuggestion();
+			//Convert input value to regex since string.startsWith() is case sensitive
+			let regex = new RegExp("^" + input.value, "i");
+			//loop through words array
+			for (let i in words) {
+				//check if input matches with any word in words array
+				if (regex.test(words[i]) && input.value != "") {
+					//Change case of word in words array according to user input
+					<!--			words[i] = caseCheck(words[i]);-->
+					//display suggestion
+					suggestion.innerHTML = words[i];
+					break;
+				}
+			}
+		});
+
+		//Complete predictive text on enter key
+		input.addEventListener("keydown", (e) => {
+			//When user presses enter and suggestion exists
+			if (e.keyCode == enterKey && suggestion.innerText != "") {
+				e.preventDefault();
+				input.value = suggestion.innerText;
+				//clear the suggestion
+				clearSuggestion();
+			}
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+
+</html>

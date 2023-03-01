@@ -50,9 +50,9 @@
   var result = uploadFileNames.filter(function (obj) { return failed.indexOf(obj) == -1; });
   successUploadList = result.join('\r\n');
   failedUploadList = failed.join('\r\n');
-  alert("Upload Failed, List of Duplicate File(s) exists in Cloud is/are : \n\n" + failedUploadList);
   alert("List of File(s) Uploaded Successfully to the Cloud is/are : \n\n" + successUploadList);
-  setTimeout(function () { window.location.href = "/"; }, 2000);
+  alert("Upload Failed, List of Duplicate File(s) exists in Cloud is/are : \n\n" + failedUploadList);
+  setTimeout(function () { window.location.href = "/"; }, 1000);
   localStorage.clear();
 
 </script>
